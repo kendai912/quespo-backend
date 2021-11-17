@@ -17,7 +17,7 @@ class OptionUserTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');       
             $table->unsignedBigInteger('option_id');
-            $table->string('status');
+            $table->enum('status',['false_1','false_2','true']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
