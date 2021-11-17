@@ -11,6 +11,5 @@ class OptionTableSeeder extends Seeder
      */
     public function run()
     {
-        //
     }
 }

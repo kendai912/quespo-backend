@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="yoSGsHcP5QJHyZofYOns" name="ページ1">
-        <mxGraphModel dx="608" dy="237" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="0" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#000000" math="0" shadow="0">
+        <mxGraphModel dx="449" dy="300" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#000000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -407,7 +407,7 @@
                 <mxCell id="322" value="address" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="320" vertex="1">
                     <mxGeometry x="30" width="150" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="329" value="・user_id,answer_id,question_idの組み合わせは重複なし&lt;br&gt;&lt;b&gt;・statusで回答ステータスを管理&lt;/b&gt;&lt;br&gt;　データ形式: enum&lt;br&gt;　1: 1回目の回答で不正解&lt;br&gt;　2: 2回目の回答で不正解&lt;br&gt;　3: 正解" style="shape=note;size=12;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#F0F0F0;align=left;" parent="1" vertex="1">
+                <mxCell id="329" value="・user_id,option_id,の組み合わせは重複なし&lt;br&gt;&lt;b&gt;・statusで回答ステータスを管理&lt;/b&gt;&lt;br&gt;　データ形式: enum&lt;br&gt;　1: 1回目の回答で不正解&lt;br&gt;　2: 2回目の回答で不正解&lt;br&gt;　3: 正解" style="shape=note;size=12;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#F0F0F0;align=left;" parent="1" vertex="1">
                     <mxGeometry x="290" y="50" width="180" height="140" as="geometry"/>
                 </mxCell>
                 <mxCell id="331" value="" style="edgeStyle=isometricEdgeStyle;endArrow=none;html=1;elbow=vertical;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="230" target="329" edge="1">
