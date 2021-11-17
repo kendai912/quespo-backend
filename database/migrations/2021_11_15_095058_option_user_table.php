@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AnswerUserTable extends Migration
+class OptionUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class AnswerUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('answer_user', function(Blueprint $table){
+        Schema::create('option_user', function(Blueprint $table){
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');       
-            $table->unsignedBigInteger('answer_id');
+            $table->unsignedBigInteger('option_id');
+            $table->string('status');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
-            $table->unique(['answer_id','user_id']);
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
+            $table->unique(['option_id','user_id']);
         });
     }
 
@@ -32,6 +33,6 @@ class AnswerUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('answer_user');
+        Schema::dropIfExists('option_user');
     }
 }

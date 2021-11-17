@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddQuestionIdToAnswerTable extends Migration
+class AddQuestionIdToOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddQuestionIdToAnswerTable extends Migration
      */
     public function up()
     {
-        Schema::table('answers', function (Blueprint $table) {
+        Schema::table('options', function (Blueprint $table) {
             $table->unsignedBigInteger('question_id')->after('id');
 
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
@@ -28,9 +28,9 @@ class AddQuestionIdToAnswerTable extends Migration
      */
     public function down()
     {
-        Schema::table('answers', function (Blueprint $table) {
-            $table->dropForeign('answers_question_id_foreign');
-            $table->dropUnique('answers_id_question_id_unique');
+        Schema::table('options', function (Blueprint $table) {
+            $table->dropForeign('options_question_id_foreign');
+            $table->dropUnique('options_id_question_id_unique');
             $table->dropColumn('question_id');
         });
     }
