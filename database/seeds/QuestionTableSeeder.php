@@ -14,7 +14,7 @@ class QuestionTableSeeder extends Seeder
     public function run()
     {
         $now = Carbon::today();
-        if (($handle = fopen(__DIR__ . '/csv/OptionData.csv', 'r')) !== false) {
+        if (($handle = fopen(__DIR__ . '/csv/QuestionData.csv', 'r')) !== false) {
             $i = 0;
             while (($data = fgetcsv($handle)))  {
                 // 先頭行はスキップ
