@@ -15,8 +15,9 @@ class CreateQuestionAreasTable extends Migration
     {
         Schema::create('question_areas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('area');
-            $table->string('address');            
+            $table->string('address');
+            $table->double('latitude',17,15);
+            $table->double('longitude',18,15);
             $table->timestamps();
         });
     }
