@@ -37,4 +37,23 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /** 21/11/23
+     * Author: ogasawara
+     * forceFill()...requestされたユーザーのapi_tokenを強制的に書き換え
+     * sessionに'api_token'で保持
+     *  **/
+    protected function authenticated(Request $request)
+    {
+        $token = Str::random(80);
+
+        $request->user()->forceFill([
+            'api_token' => hash('sha256', $token),
+        ])->save();
+
+        session()->put('api_token', $token);
+    }
+    /** ここまで追加 **/
+
+
 }

@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::middleware('auth:api')->post('/user', function (Request $request) {
+    return $request->user();
+});
+
 // Vueからproxy経由でAPIにアクセス出来るかテスト
 Route::get('/test', 'Controller@test');
-
