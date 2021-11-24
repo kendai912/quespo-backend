@@ -17,6 +17,7 @@ class CreateQuestionCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('body',500);
+            $table->string('img_file_name');
             $table->timestamps();
         });
     }

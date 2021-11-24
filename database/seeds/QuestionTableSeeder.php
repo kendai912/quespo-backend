@@ -25,6 +25,8 @@ class QuestionTableSeeder extends Seeder
                     Question::insert([
                         'question_category_id' => $data[0], 
                         'text' => $data[1],
+                        'commentary' => $data[2],                      
+                        'img_file_name' => 'test/pass/test.img',
                         'created_at' => $now,
                         'updated_at' => $now,
                     ]);

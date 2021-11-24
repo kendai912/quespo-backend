@@ -16,6 +16,8 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('text',500);
+            $table->text('commentary',500);           
+            $table->string('img_file_name');           
             $table->timestamps();
         });
     }
