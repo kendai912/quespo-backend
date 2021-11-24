@@ -26,6 +26,7 @@ class QuestionCategoryTableSeeder extends Seeder
                     QuestionCategory::insert([
                         'title' => $data[0], 
                         'body' => $data[1],
+                        'img_file_name' => 'test/pass/test.img',
                         'created_at' => $now,
                         'updated_at' => $now,
                     ]);
