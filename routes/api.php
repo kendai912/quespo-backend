@@ -24,3 +24,8 @@ Route::middleware('auth:api')->post('/user', function (Request $request) {
 
 // Vueからproxy経由でAPIにアクセス出来るかテスト
 Route::get('/test', 'Controller@test');
+
+Route::namespace('Auth')->group(function(){
+    Route::post('login', 'LoginController@login');
+    Route::post('register', 'RegisterController@create');
+});
