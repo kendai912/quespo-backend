@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -45,22 +48,25 @@ class LoginController extends Controller
      *  **/
     protected function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+          
         if(Auth::attempt($credentials)){
-            return response()->json(['message' => 'ログインに成功しました'],200);
+        // login処理が終わったらtokenを発行
+            $token = Str::random(80);
+            $request->user()->forceFill([
+                'api_token' => hash('sha256', $token),
+            ])->save();
+            session()->put('api_token', $token);              
+            return response()->json(['message' => 'ログインに成功'],200);
         } else {
-            return response()->json(['message' => 'メールアドレス,またはパスワードが一致しません'],401);
+            return response()->json(['message' => 'メールアドレス・パスワードが一致しません'],401);
         }
 
-        // login処理が終わったらtokenを発行
-        $token = Str::random(80);
-        $request->user()->forceFill([
-            'api_token' => hash('sha256', $token),
-        ])->save();
-
-        session()->put('api_token', $token);
     }
+    
 
 
 }
