@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\QuestionCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Question;
 use App\Models\Option;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,10 @@ class QuestionCategoryController extends Controller
 
     public function index()
     {        
-        $QuestionCategory =  QuestionCategory::with('questionArea')->defaultSelect()->get();
+        $QuestionCategory = QuestionCategory::with('questionArea')->defaultSelect()->get();
+
+        // $numOfQuestions =  Question::where('question_category_id',1)->count();
+        // print_r($numOfQuestions);
         // $UserStatus = Option::whereHas('users',function($query){
         //     $query->where('')
         // })->get();
