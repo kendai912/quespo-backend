@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\QuestionCategory;
 use App\Http\Controllers\Controller;
 use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Option;
 use Illuminate\Http\Request;
 
@@ -18,17 +19,30 @@ class QuestionCategoryController extends Controller
 
     public function index()
     {        
-        $QuestionCategory = QuestionCategory::with('questionArea')->defaultSelect()->get();
-
-        // $numOfQuestions =  Question::where('question_category_id',1)->count();
-        // print_r($numOfQuestions);
-        // $UserStatus = Option::whereHas('users',function($query){
-        //     $query->where('')
-        // })->get();
-
-        // var_dump($array);
+        $questionCategory = QuestionCategory::with('questionArea')->defaultSelect()->get();
+        // ログインユーザーID(1) ※Postmanを使う際はここを数字(任意のuserid)に置き換える
+        $uid = Auth::id();
+        //クエスチョンカテゴリーのID一覧(2) 
+        $questionCategoryIds = QuestionCategory::pluck('id');
+        // (1)(2)を引数に各カテゴリーのユーザーの回答レコードを取得
+        foreach($questionCategoryIds as $i => $id){
+            // 'option_user','options','questionsno'の３テーブルを繋げてレコード取得
+            $complete_flag = Option::whereHas('users', function ($q) use ($uid) {
+                $q->where('user_id', $uid);
+            })->whereHas('question',function($q) use ($id){
+                $q->where('question_category_id', $id);
+            })->count();
+            // ５問回答済みの場合は回答フラグをtrue/それ以外はfalse
+            if($complete_flag === 5){
+                $complete_flag = true;
+                // $questionCategoryに連想配列形式で'complete_flag'を追加
+                $questionCategory[$i]['complete_flag'] = $complete_flag;
+            } else {
+                $complete_flag = false;  
+            }
+        }
         return response()->json([
-            'QuestionCategories' => json_decode($QuestionCategory, true)
+            'QuestionCategories' => json_decode($questionCategory, true)
         ],200);
     }
 
