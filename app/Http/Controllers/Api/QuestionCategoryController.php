@@ -4,38 +4,27 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\QuestionCategory;
 use App\Http\Controllers\Controller;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 class QuestionCategoryController extends Controller
 {
-    public function handle($request, Closure $next, ...$scopes)
-    {
-        $psr = (new DiactorosFactory)->createRequest($request);
-    
-        try {
-            $psr = $this->server->validateAuthenticatedRequest($psr);
-        } catch (OAuthServerException $e) {
-            error_log($e->getHint()); // add this line to know the actual error
-            throw new AuthenticationException;
-        }
-    
-        $this->validateScopes($psr, $scopes);
-    
-        return $next($request);
-    }
-    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {        
-        $QuestionCategory =  QuestionCategory::first();
+        $QuestionCategory =  QuestionCategory::with('questionArea')->defaultSelect()->get();
+        // $UserStatus = Option::whereHas('users',function($query){
+        //     $query->where('')
+        // })->get();
+
+        // var_dump($array);
         return response()->json([
-            'question_category_id' => $QuestionCategory->id,
-            'title' => $QuestionCategory->title,
-            'body' => $QuestionCategory->body,
+            'QuestionCategories' => json_decode($QuestionCategory, true)
         ],200);
     }
 

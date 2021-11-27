@@ -21,10 +21,12 @@ Route::namespace('Auth')->group(function(){
 
 // Vueからproxy経由でAPIにアクセス出来るかテスト
 Route::get('/test', 'Controller@test');
-// Route::get('/handle', 'Api\QuestionCategoryController@handle');
 
-Route::middleware('auth:api')->namespace('Api')->group(function(){
+// Route::middleware('auth:api')->namespace('Api')->group(function(){
+//     Route::resource('questioncategories','QuestionCategoryController',['only' => ['index','show']]);
+// });
+
+Route::namespace('Api')->group(function(){
     Route::resource('questioncategories','QuestionCategoryController',['only' => ['index','show']]);
 });
-
 
