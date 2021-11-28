@@ -41,22 +41,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /** 21/11/23
-     * Author: ogasawara
-     * 新規ユーザー登録時、ユーザーTokenを生成してUserTableに保存
-     * sessionに'api_token'で保持
-     *  **/
-    // protected function registered(Request $request, $user)
-    // {
-    //     $token = Str::random(80);
-
-    //     User::where('id', $user->id)
-    //         ->update(['api_token' => hash('sha256', $token)]);
-
-    //     session()->put('api_token', $token);
-    // }
-    /** ここまで追加 **/
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -79,11 +63,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::where('email',$data['email'])->first();
-        if(!empty($user)){
-            // Token生成
+        $user = User::where('email', $data['email'])->first();
+        if (!empty($user)) {
+            // token生成
             $token = Str::random(80);
-            session()->put('api_token', $token);
 
             User::create([
                 'name' => $data['name'],
@@ -91,9 +74,11 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
                 'api_token' => hash('sha256', $token),
             ]);
-            return response()->json(['message' => '会員登録に成功しました'],201);
+
+            // token返却
+            return response()->json(['token' => $token], 201);
         } else {
-            return response()->json(['message' => '既にメールアドレスの登録がございます。'],422);
+            return response()->json(['message' => '既にメールアドレスの登録がございます。'], 422);
         }
     }
 }

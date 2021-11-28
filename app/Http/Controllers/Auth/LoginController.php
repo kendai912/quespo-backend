@@ -44,7 +44,6 @@ class LoginController extends Controller
     /** 21/11/23
      * Author: ogasawara
      * forceFill()...requestされたユーザーのapi_tokenを強制的に書き換え
-     * sessionに'api_token'で保持
      *  **/
     protected function login(Request $request)
     {
@@ -53,20 +52,17 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
           
-        if(Auth::attempt($credentials)){
-        // login処理が終わったらtokenを発行
+        if (Auth::attempt($credentials)) {
+            // login処理が終わったらtokenを発行＆ハッシュ化し保存
             $token = Str::random(80);
             $request->user()->forceFill([
                 'api_token' => hash('sha256', $token),
             ])->save();
-            session()->put('api_token', $token);              
-            return response()->json(['message' => 'ログインに成功'],200);
+
+            // tokenを返却
+            return response()->json(['token' => $token], 200);
         } else {
-            return response()->json(['message' => 'メールアドレス・パスワードが一致しません'],401);
+            return response()->json(['message' => 'メールアドレス・パスワードが一致しません'], 401);
         }
-
     }
-    
-
-
 }
