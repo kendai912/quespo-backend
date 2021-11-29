@@ -10,7 +10,7 @@ class QuestionCategory extends Model
     // スコープ定義
     public function scopeDefaultSelect($query)
     {
-        return $query->addSelect(['id','title','body','num_of_question','img_file_name as img_file_name_question_category','created_at']);
+        return $query->addSelect(['id','title','body','img_file_name as img_file_name_question_category','created_at']);
     }
 
     // QuestionAreaテーブルと1対1

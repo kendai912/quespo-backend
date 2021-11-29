@@ -20,26 +20,37 @@ class QuestionCategoryController extends Controller
     public function index()
     {        
         $questionCategory = QuestionCategory::with('questionArea')->defaultSelect()->get();
+        $complete_flag = null;
+        $numOfQuestion = null;
         // ログインユーザーID(1) ※Postmanを使う際はここを数字(任意のuserid)に置き換える
-        $uid = Auth::id();
+        // $uid = Auth::id();
+        $uid = 1;
         //クエスチョンカテゴリーのID一覧(2) 
         $questionCategoryIds = QuestionCategory::pluck('id');
         // (1)(2)を引数に各カテゴリーのユーザーの回答レコードを取得
-        foreach($questionCategoryIds as $i => $id){
+        foreach($questionCategoryIds as $i => $cid){
             // 'option_user','options','questionsno'の３テーブルを繋げてレコード取得
-            $complete_flag = Option::whereHas('users', function ($q) use ($uid) {
-                $q->where('user_id', $uid);
-            })->whereHas('question',function($q) use ($id){
-                $q->where('question_category_id', $id);
+            $user_ans = Option::whereHas('users', function ($q) use ($uid){
+                $q->where('user_id', $uid)->where(function($custom_q){
+                    $custom_q->where('status','true')->orWhere('status','false_2');
+                });
+            })->whereHas('question',function($q) use($cid) {
+                $q->where('question_category_id', $cid);
             })->count();
+
+            $numOfQuestion = Question::whereHas('questionCategory', function($q) use ($i){
+                $q->where('id',$i+1);
+            })->count();
+
             // ５問回答済みの場合は回答フラグをtrue/それ以外はfalse
-            if($complete_flag === 5){
+            if($user_ans === $numOfQuestion){
                 $complete_flag = true;
                 // $questionCategoryに連想配列形式で'complete_flag'を追加
-                $questionCategory[$i]['complete_flag'] = $complete_flag;
             } else {
                 $complete_flag = false;  
             }
+            $questionCategory[$i]['complete_flag'] = $complete_flag;
+            $questionCategory[$i]['num_of_question'] = $numOfQuestion;
         }
         return response()->json([
             'QuestionCategories' => json_decode($questionCategory, true)
