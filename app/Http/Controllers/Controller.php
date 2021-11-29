@@ -10,16 +10,4 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function test()
-    {
-        return response()->json(
-            [
-            'result' => "success!"
-            ],
-            200,
-            [],
-            JSON_UNESCAPED_UNICODE
-        );
-    }
 }

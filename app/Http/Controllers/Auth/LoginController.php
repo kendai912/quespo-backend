@@ -38,7 +38,6 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
     }
 
     /** 21/11/23
@@ -64,5 +63,16 @@ class LoginController extends Controller
         } else {
             return response()->json(['message' => 'メールアドレス・パスワードが一致しません'], 401);
         }
+    }
+
+    protected function logout()
+    {
+        if (Auth::check()) {
+            // api_tokenを空にする
+            Auth::user()->api_token = null;
+            Auth::user()->save();
+        }
+
+        return response()->json(['message' => 'logout succeeded'], 200);
     }
 }
