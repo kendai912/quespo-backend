@@ -15,15 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Auth')->group(function () {
-    Route::post('/login', 'LoginController@login');
     Route::post('/register', 'RegisterController@create');
+    Route::post('/login', 'LoginController@login');
 });
 
-// Vueからproxy経由でAPIにアクセス出来るかテスト
-Route::get('/test', 'Controller@test');
+Route::middleware('auth:api')->group(function () {
+    Route::namespace('Api')->group(function () {
+        Route::get('/test', 'TestController@test');
+        Route::resource('/questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
+    });
 
-Route::middleware('auth:api')->namespace('Api')->group(function () {
-    Route::resource('/questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
+    Route::namespace('Auth')->group(function () {
+        Route::post('/logout', 'LoginController@logout');
+    });
 });
 
 // Route::namespace('Api')->group(function(){
