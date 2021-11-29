@@ -14,7 +14,7 @@ class Question extends Model
 
     //optionテーブルの主テーブル
     public function options(){
-        return $this->hasMany('App\Models\Option');
+        return $this->hasMany('App\Models\Option')->defaultSelect();
     }
 
     // QuestionCategoryテーブルの従テーブル
