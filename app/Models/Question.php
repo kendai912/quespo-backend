@@ -27,18 +27,3 @@ class Question extends Model
         return $this->hasOne('App\Models\Hint')->defaultSelect();
     }
 }
-
-
-
-// App\Models\Option::whereHas('users', function ($q) {
-//     $q->where('user_id', 1)->where(function($tst){
-//         $tst->where('status','true')->orWhere('status','false_2');
-//     });
-// })->whereHas('question',function($q) {
-//     $q->where('question_category_id', 1);
-// })->count();
-
-// OK
-// DB::table('option_user')->where([['user_id', 1],['question_category_id',1]])->Where(function($q){
-//     $q->where('status','true')->orWhere('status','false_2');
-// })->get();

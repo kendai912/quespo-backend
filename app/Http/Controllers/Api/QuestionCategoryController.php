@@ -98,7 +98,8 @@ class QuestionCategoryController extends Controller
         $i_End = Question::Where('question_category_id',$questionCategory)->orderBy('id','desc')->pluck('id')->first();
 
         // (1)(2)を引数に[問題:[選択肢:val]]形式のレコード作成
-        $queryQuestionOptions = Question::with(['options'=> function($q) use ($i_Start,$i_End){
+        // questions,hints,optionsテーブルからレコード取得
+        $queryQuestionOptions = Question::with('hint')->with(['options'=> function($q) use ($i_Start,$i_End){
             $q->whereBetween('question_id',[$i_Start,$i_End] );
         }])->where('question_category_id',$questionCategory)->defaultSelect()->get();
      
