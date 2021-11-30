@@ -93,7 +93,7 @@ class QuestionCategoryController extends Controller
             $q->where('id',$questionCategory);
         })->count();
 
-        // (2)引数取得選択カテゴリーの問題一覧から先頭の質問idと末尾の質問idを取得
+        // (2)引数取得...選択カテゴリーの問題一覧から先頭の質問idと末尾の質問idを取得
         $i_Start = Question::Where('question_category_id',$questionCategory)->pluck('id')->first();
         $i_End = Question::Where('question_category_id',$questionCategory)->orderBy('id','desc')->pluck('id')->first();
 
@@ -105,7 +105,7 @@ class QuestionCategoryController extends Controller
      
         return response()->json([
             'questionCategory' => json_decode($queryCategory, true),
-            '$questions' => json_decode($queryQuestionOptions, true)
+            'questions' => json_decode($queryQuestionOptions, true)
         ],200);
     }
 
