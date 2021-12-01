@@ -21,7 +21,7 @@ class Cors
             'Access-Control-Allow-Origin'      => 'https://quespo-frontend.herokuapp.com',
             'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
             'Access-Control-Max-Age'           => '86400',
-            'Access-Control-Allow-Headers'     => 'Origin,Authorization,X-Requested-With, Accept, Content-Type'
+            'Access-Control-Allow-Headers'     => 'Origin,Authorization,X-Requested-With, Accept, Content-Type',
         ];
 
         if ($request->isMethod('OPTIONS'))
