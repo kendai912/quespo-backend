@@ -28,12 +28,24 @@ Route::middleware('cors')->namespace('Auth')->group(function () {
 Route::middleware(['auth:api','cors'])->group(function () {
     Route::namespace('Api')->group(function () {
         Route::get('/test', 'TestController@test');
+        Route::options('/questioncategories', function() {
+            return response()->json();
+        });         
         Route::resource('/questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
+        Route::options('/questions', function() {
+            return response()->json();
+        });         
         Route::resource('/questions', 'QuestionController', ['only' => ['show']]);
+        Route::options('/question/answer', function() {
+            return response()->json();
+        });        
         Route::post('/question/answer', 'QuestionController@answer');
     });
-
+    
     Route::namespace('Auth')->group(function () {
+        Route::options('/logout', function() {
+            return response()->json();
+        });
         Route::post('/logout', 'LoginController@logout');
     });
 });
