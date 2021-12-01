@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\QuestionCategory;
 use App\Http\Controllers\Controller;
 use App\Models\Question;
@@ -74,7 +75,7 @@ class QuestionController extends Controller
         // statusをquestionレコードにセット
         $queryQuestionOptions['status'] = $status;
         return response()->json([
-            'questions' => json_decode($queryQuestionOptions, true)
+            'question' => json_decode($queryQuestionOptions, true)
         ], 200);
     }
 
@@ -130,35 +131,67 @@ class QuestionController extends Controller
             // 3-1. 現状のstatusがnull(未回答の場合)
             if ($result) { // 正解の場合
                 $newStatus = 'true';
-                $user->options()->attach(
-                    ['user_id' => $user->id],
-                    ['option_id' => $request->option_id],
-                    ['status' => $newStatus],
-                );
+                DB::table('option_user')->insert([
+                    'user_id' => $user->id,
+                    'option_id' => $request->option_id,
+                    'status' => $newStatus,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+            // $user->options()->attach(
+                //     ['user_id' => $user->id],
+                //     ['option_id' => $request->option_id],
+                //     ['status' => $newStatus],
+                // );
             } else {  // 不正解の場合
                 $newStatus = 'false_1';
-                $user->options()->attach(
-                    ['user_id' => $user->id],
-                    ['option_id' => $request->option_id],
-                    ['status' => $newStatus],
-                );
+                DB::table('option_user')->insert([
+                    'user_id' => $user->id,
+                    'option_id' => $request->option_id,
+                    'status' => $newStatus,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+                // $user->options()->attach(
+                //     ['user_id' => $user->id],
+                //     ['option_id' => $request->option_id],
+                //     ['status' => $newStatus],
+                // );
             }
         } elseif ($mostCurrentStatus == 'false_1') {
             // 3-2. 現状のstatusがfalse_1の場合
             if ($result) { // 正解の場合
                 $newStatus = 'true';
-                $user->options()->attach(
-                    ['user_id' => $user->id],
-                    ['option_id' => $request->option_id],
-                    ['status' => $newStatus],
-                );
+                DB::table('option_user')->insert([
+                    'user_id' => $user->id,
+                    'option_id' => $request->option_id,
+                    'status' => $newStatus,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+            // $user->options()->attach(
+                //     ['user_id' => $user->id],
+                //     ['option_id' => $request->option_id],
+                //     ['status' => $newStatus],
+                // );
             } else {  // 不正解の場合
                 $newStatus = 'false_2';
-                $user->options()->attach(
-                    ['user_id' => $user->id],
-                    ['option_id' => $request->option_id],
-                    ['status' => $newStatus],
-                );
+                DB::table('option_user')->insert([
+                    'user_id' => $user->id,
+                    'option_id' => $request->option_id,
+                    'status' => $newStatus,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+                // $user->options()->attach(
+                //     ['user_id' => $user->id],
+                //     ['option_id' => $request->option_id],
+                //     ['status' => $newStatus],
+                // );
             }
         } elseif ($mostCurrentStatus == 'false_2' || $mostCurrentStatus == 'true') {
             // 3-3. 現状のstatusがfalse_2又はtrueの場合
