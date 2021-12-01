@@ -15,9 +15,26 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        return $next($request)
-        ->header('Access-Control-Allow-Origin', 'https://quespo-frontend.herokuapp.com')
-        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-        ->header('Access-Control-Allow-Headers', 'Origin,Authorization,X-Requested-With, Accept, Content-Type');
+
+        $headers = [
+            'Access-Control-Allow-Credentials'=> 'true',
+            'Access-Control-Allow-Origin'      => 'https://quespo-frontend.herokuapp.com',
+            'Access-Control-Allow-Methods'     => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Max-Age'           => '86400',
+            'Access-Control-Allow-Headers'     => 'Origin,Authorization,X-Requested-With, Accept, Content-Type'
+        ];
+
+        if ($request->isMethod('OPTIONS'))
+        {
+            return response()->json('{"method":"OPTIONS"}', 200, $headers);
+        }
+
+        $response = $next($request);
+        foreach($headers as $key => $value)
+        {
+            $response->header($key, $value);
+        }
+        return $response;
     }
+
 }
