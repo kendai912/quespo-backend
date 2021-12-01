@@ -25,7 +25,7 @@ Route::middleware('cors')->namespace('Auth')->group(function () {
     Route::post('login', 'LoginController@login');
 });
 
-Route::middleware(['auth:api','cors'])->group(function () {
+Route::middleware('cors')->group(function () {
     Route::namespace('Api')->group(function () {
         Route::get('test', 'TestController@test');
         Route::options('questioncategories', function() {
