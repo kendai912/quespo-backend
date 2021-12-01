@@ -29,22 +29,22 @@ Route::middleware(['auth:api','cors'])->group(function () {
     Route::namespace('Api')->group(function () {
         Route::get('test', 'TestController@test');
         Route::options('questioncategories', function() {
-            return response()->json();
+            return response()->json(['message' => 'succeeded'], 200);
         });         
         Route::resource('questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
         Route::options('questions', function() {
-            return response()->json();
+            return response()->json(['message' => 'succeeded'], 200);
         });         
         Route::resource('questions', 'QuestionController', ['only' => ['show']]);
         Route::options('question/answer', function() {
-            return response()->json();
+            return response()->json(['message' => 'succeeded'], 200);
         });        
         Route::post('question/answer', 'QuestionController@answer');
     });
     
     Route::namespace('Auth')->group(function () {
         Route::options('logout', function() {
-            return response()->json();
+            return response()->json(['message' => 'succeeded'], 200);
         });
         Route::post('logout', 'LoginController@logout');
     });
