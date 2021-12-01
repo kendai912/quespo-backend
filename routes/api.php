@@ -22,12 +22,12 @@ Route::namespace('Auth')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::namespace('Api')->group(function () {
         Route::get('/test', 'TestController@test');
-        Route::resource('/questioncategories','QuestionCategoryController',['only' => ['index','show']]);
-        Route::resource('/questions','QuestionController',['only' => ['show']]);
+        Route::resource('/questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
+        Route::resource('/questions', 'QuestionController', ['only' => ['show']]);
+        Route::post('/question/answer', 'QuestionController@answer');
     });
 
     Route::namespace('Auth')->group(function () {
         Route::post('/logout', 'LoginController@logout');
     });
 });
-
