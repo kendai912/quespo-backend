@@ -39,7 +39,7 @@ class OptionUserTableSeeder extends Seeder
          * [0:[選択肢id=>outcome],[選択肢id=>outcome],[選択肢id=>outcome]]...
          * $DataSet = questionのテストデータ個数分
         */
-        $DataSet = 25;
+        $DataSet = 26;
         for($i = 1; $i <= $DataSet; $i++){
             $options = Option::where('question_id',$i)->orderBy('id','asc')->pluck('outcome','id')->all();
             array_push($optionsArray,$options);

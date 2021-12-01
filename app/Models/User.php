@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function options()
     {
-        return $this->belongsToMany('App\Models\Option')->withTimestamps();
+        return $this->belongsToMany('App\Models\Option')->withPivot('status')->withTimestamps();
     }
 
 }

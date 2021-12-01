@@ -15,7 +15,7 @@ class Option extends Model
     // userテーブルとの中間テーブル
     public function users()
     {
-        return $this->belongsToMany('App\Models\User')->withTimestamps();
+        return $this->belongsToMany('App\Models\User')->withPivot('status')->withTimestamps();
     }
     // questionテーブルの従テーブル
     public function question()
