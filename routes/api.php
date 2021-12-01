@@ -14,12 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('Auth')->group(function () {
+Route::middleware('cors')->namespace('Auth')->group(function () {
+    Route::options('/register', function() {
+        return response()->json();
+    });
     Route::post('/register', 'RegisterController@create');
+    Route::options('/login', function() {
+        return response()->json();
+    });   
     Route::post('/login', 'LoginController@login');
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api','cors'])->group(function () {
     Route::namespace('Api')->group(function () {
         Route::get('/test', 'TestController@test');
         Route::resource('/questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
