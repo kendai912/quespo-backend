@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('cors')->namespace('Auth')->group(function () {
+Route::namespace('Auth')->group(function () {
     Route::options('register', function() {
         return response()->json();
     });
@@ -25,7 +25,7 @@ Route::middleware('cors')->namespace('Auth')->group(function () {
     Route::post('login', 'LoginController@login');
 });
 
-Route::middleware(['auth:api','cors'])->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::namespace('Api')->group(function () {
         Route::get('test', 'TestController@test');
         Route::options('questioncategories', function() {

@@ -59,7 +59,7 @@ class LoginController extends Controller
             ])->save();
 
             // tokenを返却
-            return response()->json(['token' => $token], 200)->withHeaders('Bearer'.$token);
+            return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['message' => 'メールアドレス・パスワードが一致しません'], 401);
         }
