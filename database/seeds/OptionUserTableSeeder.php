@@ -17,7 +17,7 @@ class OptionUserTableSeeder extends Seeder
     public function run()
     {
         $now = Carbon::today();
-        $users = User::where('id',1)->orWhere('id',2)->pluck('id')->all();
+        $users = User::where('id',5)->orWhere('id',15)->pluck('id')->all();
         $optionsArray = array();
 
         /** 
