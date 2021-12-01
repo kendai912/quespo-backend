@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -60,17 +62,17 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        $user = User::where('email', $data['email'])->first();
-        if (!empty($user)) {
+        $user = User::where('email', $request->email)->first();
+        if (empty($user)) {
             // token生成
             $token = Str::random(80);
 
             User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
                 'api_token' => hash('sha256', $token),
             ]);
 
