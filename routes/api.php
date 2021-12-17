@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Auth')->group(function () {
-    Route::post('/register', 'RegisterController@create');
-    Route::post('/login', 'LoginController@login');
+    Route::post('register', 'RegisterController@create');
+    Route::post('login', 'LoginController@login');
 });
 
 Route::middleware('auth:api')->group(function () {
     Route::namespace('Api')->group(function () {
-        Route::get('/test', 'TestController@test');
-        Route::resource('/questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);
-        Route::resource('/questions', 'QuestionController', ['only' => ['show']]);
-        Route::post('/question/answer', 'QuestionController@answer');
+        Route::get('test', 'TestController@test');     
+        Route::resource('questioncategories', 'QuestionCategoryController', ['only' => ['index','show']]);      
+        Route::resource('questions', 'QuestionController', ['only' => ['show']]);     
+        Route::post('question/answer', 'QuestionController@answer');
     });
-
+    
     Route::namespace('Auth')->group(function () {
-        Route::post('/logout', 'LoginController@logout');
+        Route::post('logout', 'LoginController@logout');
     });
 });
